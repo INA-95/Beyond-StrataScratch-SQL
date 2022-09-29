@@ -1,0 +1,13 @@
+-- effectiveness of channel : 2017 <= <= 2018
+-- effectiveness = total customers / total money spend
+-- channel | avg(effectiveness) order by asc
+
+WITH temp AS (SELECT advertising_channel, (SUM(money_spent) / SUM(customers_acquired)) AS effect
+              FROM uber_advertising
+              where year BETWEEN 2017 AND 2018
+              GROUP BY 1)
+
+SELECT advertising_channel, AVG(effect)
+FROM temp
+GROUP BY 1
+ORDER BY 2 ASC
